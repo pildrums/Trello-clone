@@ -7,6 +7,7 @@ import {
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { todoState } from "./atoms";
+import DraggableCard from "./components/DraggableCard";
 
 function App() {
   const [todos, setTodos] = useRecoilState(todoState);
@@ -15,9 +16,15 @@ function App() {
     setTodos((currentTodos) => {
       const copyTodos = [...currentTodos];
       // 1) source.index에서 아이템 삭제
+      console.log("Delete item on", source.index);
+      console.log(copyTodos);
       copyTodos.splice(source.index, 1);
+      console.log("Deleted item");
+      console.log(copyTodos);
       // 2) destination.index로 item 다시 돌려두기
+      console.log("Put back", draggableId, "on ", destination.index);
       copyTodos.splice(destination?.index, 0, draggableId);
+      console.log(copyTodos);
       return copyTodos;
     });
   };
@@ -29,17 +36,7 @@ function App() {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>
                 {todos.map((todo, index) => (
-                  <Draggable key={todo} draggableId={todo} index={index}>
-                    {(magic) => (
-                      <Card
-                        ref={magic.innerRef}
-                        {...magic.dragHandleProps}
-                        {...magic.draggableProps}
-                      >
-                        {todo}
-                      </Card>
-                    )}
-                  </Draggable>
+                  <DraggableCard key={todo} todo={todo} index={index} />
                 ))}
                 {magic.placeholder}
               </Board>
@@ -73,13 +70,6 @@ const Board = styled.div`
   background: ${(props) => props.theme.boardColor};
   border-radius: 5px;
   min-height: 200px;
-`;
-
-const Card = styled.div`
-  padding: 10px 10px;
-  border-radius: 5px;
-  background: ${(props) => props.theme.cardColor};
-  margin-bottom: 5px;
 `;
 
 export default App;
