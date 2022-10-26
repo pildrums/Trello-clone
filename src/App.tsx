@@ -16,15 +16,9 @@ function App() {
     setTodos((currentTodos) => {
       const copyTodos = [...currentTodos];
       // 1) source.index에서 아이템 삭제
-      console.log("Delete item on", source.index);
-      console.log(copyTodos);
       copyTodos.splice(source.index, 1);
-      console.log("Deleted item");
-      console.log(copyTodos);
       // 2) destination.index로 item 다시 돌려두기
-      console.log("Put back", draggableId, "on ", destination.index);
       copyTodos.splice(destination?.index, 0, draggableId);
-      console.log(copyTodos);
       return copyTodos;
     });
   };
