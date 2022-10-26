@@ -1,10 +1,26 @@
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-
-const todos = ["a", "b", "c", "d", "e"];
+import { todoState } from "./atoms";
 
 function App() {
-  const onDragEnd = () => {};
+  const [todos, setTodos] = useRecoilState(todoState);
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (!destination) return;
+    setTodos((currentTodos) => {
+      const copyTodos = [...currentTodos];
+      // 1) source.index에서 아이템 삭제
+      copyTodos.splice(source.index, 1);
+      // 2) destination.index로 item 다시 돌려두기
+      copyTodos.splice(destination?.index, 0, draggableId);
+      return copyTodos;
+    });
+  };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
@@ -13,14 +29,14 @@ function App() {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>
                 {todos.map((todo, index) => (
-                  <Draggable draggableId={todo} index={index}>
+                  <Draggable key={todo} draggableId={todo} index={index}>
                     {(magic) => (
                       <Card
                         ref={magic.innerRef}
                         {...magic.dragHandleProps}
                         {...magic.draggableProps}
                       >
-                        One
+                        {todo}
                       </Card>
                     )}
                   </Draggable>
