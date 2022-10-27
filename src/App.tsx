@@ -9,16 +9,32 @@ function App() {
   const onDragEnd = (info: DropResult) => {
     console.log(info);
     const { destination, draggableId, source } = info;
+    if (!destination) return;
     if (destination?.droppableId === source.droppableId) {
+      // 같은 보드에서 움직임
+      setTodos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy,
+        };
+      });
     }
-    /*     setTodos((currentTodos) => {
-      const copyTodos = [...currentTodos];
-      // 1) source.index에서 아이템 삭제
-      copyTodos.splice(source.index, 1);
-      // 2) destination.index로 item 다시 돌려두기
-      copyTodos.splice(destination?.index, 0, draggableId);
-      return copyTodos;
-    }); */
+    if (destination.droppableId !== source.droppableId) {
+      setTodos((allBoards) => {
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination.droppableId]];
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
+        };
+      });
+    }
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>

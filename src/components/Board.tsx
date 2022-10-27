@@ -13,7 +13,11 @@ function Board({ todos, boardId }: IBoardProps) {
       <Title>{boardId}</Title>
       <Droppable droppableId={boardId}>
         {(magic) => (
-          <div ref={magic.innerRef} {...magic.droppableProps}>
+          <div
+            style={{ backgroundColor: "red" }}
+            ref={magic.innerRef}
+            {...magic.droppableProps}
+          >
             {todos.map((todo, index) => (
               <DraggableCard key={todo} todo={todo} index={index} />
             ))}
@@ -39,6 +43,6 @@ const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
-`
+`;
 
 export default Board;
