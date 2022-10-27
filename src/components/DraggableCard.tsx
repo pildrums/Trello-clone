@@ -8,7 +8,7 @@ interface IDraggableProps {
 }
 
 function DraggableCard({ todo, index }: IDraggableProps) {
-  console.log(`${todo} has been rendered`);
+  // console.log(`${todo} has been rendered`);
   return (
     <Draggable key={todo} draggableId={todo} index={index}>
       {(magic) => (
