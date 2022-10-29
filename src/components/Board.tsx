@@ -57,6 +57,7 @@ const Area = styled.div<IAreaProps>`
   background: ${(props) =>
     props.isDraggingOver ? "pink" : props.isDraggingFromThis ? "red" : "blue"};
   flex-grow: 1;
+  transition: background 0.3s ease-in-out;
 `;
 
 export default Board;
