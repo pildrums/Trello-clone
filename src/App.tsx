@@ -62,6 +62,7 @@ const Wrapper = styled.div`
 const Boards = styled.div`
   width: 100%;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 `;
