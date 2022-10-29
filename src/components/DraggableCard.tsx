@@ -6,18 +6,19 @@ import styled from "styled-components";
  * @interface todo / index type
  */
 interface IDraggableProps {
-  todo: string;
+  todoId: number;
+  todoText: string;
   index: number;
 }
 
 /**
- * @param todo 
- * @param index 
+ * @param todo
+ * @param index
  * @returns DraggableCard Components Rendering
  */
-function DraggableCard({ todo, index }: IDraggableProps) {
+function DraggableCard({ todoId, todoText, index }: IDraggableProps) {
   return (
-    <Draggable key={todo} draggableId={todo} index={index}>
+    <Draggable draggableId={todoId + ""} index={index}>
       {(provided, snapshot) => (
         <Card
           isDragging={snapshot.isDragging}
@@ -25,7 +26,7 @@ function DraggableCard({ todo, index }: IDraggableProps) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          {todo}
+          {todoText}
         </Card>
       )}
     </Draggable>
