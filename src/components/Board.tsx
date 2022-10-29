@@ -2,11 +2,19 @@ import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import DraggableCard from "./DraggableCard";
 
+/**
+ * @interface todos /  boardId types
+ */
 interface IBoardProps {
   todos: string[];
   boardId: string;
 }
 
+/**
+ * @param todos
+ * @param boardId
+ * @returns Board Components rendering
+ */
 function Board({ todos, boardId }: IBoardProps) {
   return (
     <Wrapper>

@@ -23,6 +23,7 @@ function App() {
       });
     }
     if (destination.droppableId !== source.droppableId) {
+      // 다른 보드에서 움직임
       setTodos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
         const destinationBoard = [...allBoards[destination.droppableId]];

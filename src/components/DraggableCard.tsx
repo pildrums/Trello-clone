@@ -2,11 +2,19 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
+/**
+ * @interface todo / index type
+ */
 interface IDraggableProps {
   todo: string;
   index: number;
 }
 
+/**
+ * @param todo 
+ * @param index 
+ * @returns DraggableCard Components Rendering
+ */
 function DraggableCard({ todo, index }: IDraggableProps) {
   return (
     <Draggable key={todo} draggableId={todo} index={index}>
