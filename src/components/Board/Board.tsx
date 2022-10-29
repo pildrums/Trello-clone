@@ -3,7 +3,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import DraggableCard from "./DraggableCard";
+import DraggableCard from "../Card/DraggableCard";
 
 /**
  * @interface todos /  boardId types

@@ -5,23 +5,42 @@ export interface ITodo {
   text: string;
 }
 
-/**
- * @interface atom types -> [key: string]: string[]
- */
-interface ITodoState {
+export interface ITodoState {
   [key: string]: ITodo[];
 }
 
-/**
- * @todo string으로 되어있는 데이터 수정 예정
- * @constant todoState todo 상태
- */
+// localStorage
+export const PIL_TRELLO_TODO = "PIL_TRELLO_TODO";
+const localStorageTodo = localStorage.getItem(PIL_TRELLO_TODO) || "{}";
+const parsedLocalStorageTodo = JSON.parse(localStorageTodo);
 
-export const todoState = atom<ITodoState>({
-  key: "todo",
-  default: {
-    todo: [],
-    doing: [],
-    done: [],
-  },
+// board
+export const boardState = atom({ key: "boardState", default: [] });
+export const boardTitleState = atom<string>({
+  key: "boardTitleState",
+  default: "",
 });
+export const boardModalState = atom<boolean>({
+  key: "boardModalState",
+  default: false,
+});
+export const boardTitleModalState = atom<boolean>({
+  key: "boardTitleModalState",
+  default: false,
+});
+
+// todo
+export const todoState = atom<ITodoState>({
+  key: "todoState",
+  default: parsedLocalStorageTodo,
+});
+
+// card
+export const cardState = atom<object>({ key: "cardState", default: {} });
+export const cardModalState = atom<boolean>({
+  key: "cardModalState",
+  default: false,
+});
+
+// garbage
+export const garbageState = atom({ key: "garbageState", default: [] });
