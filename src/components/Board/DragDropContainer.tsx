@@ -44,9 +44,7 @@ function DragDropContainer() {
     } else if (source.droppableId !== destination.droppableId) {
       if (destination.droppableId === "garbage") {
         setTodos((todos: ITodoState) => {
-          const copySource: ITodo[] = {
-            ...todos[source.droppableId],
-          };
+          const copySource: ITodo[] = [...todos[source.droppableId]];
           copySource.splice(source.index, 1);
           const result: ITodoState = {
             ...todos,
@@ -57,7 +55,7 @@ function DragDropContainer() {
         });
       } else {
         setTodos((todos: ITodoState) => {
-          const copySource: ITodo[] = { ...todos[source.droppableId] };
+          const copySource: ITodo[] = [...todos[source.droppableId]];
           const movedTodoObject: ITodo = copySource[source.index];
           copySource.splice(source.index, 1);
           const copyDestination: ITodo[] = [...todos[destination.droppableId]];
