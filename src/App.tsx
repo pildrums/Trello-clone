@@ -32,6 +32,19 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const AddBoardButton = styled.button``;
+const AddBoardButton = styled.button`
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  border: none;
+  outline: none;
+  background-color: rgba(178, 190, 195, 0.5);
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 35px;
+  color: white;
+  padding: 10px 17px;
+  border-radius: 50%;
+  font-size: 25px;
+  cursor: pointer;
+`;
 
 export default App;
