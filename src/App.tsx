@@ -1,11 +1,11 @@
 import BoardModal from "components/Board/BoardModal";
+import BoardTitleModal from "components/Board/BoardTitleModal";
 import DragDropContainer from "components/Board/DragDropContainer";
 import CardModal from "components/Card/CardModal";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
+import { SetterOrUpdater, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import GlobalStyle from "styles/GlobalStyle";
-import { boardModalState, todoState } from "./atoms";
+import { boardModalState } from "./atoms";
 
 function App() {
   const setBoardModal: SetterOrUpdater<boolean> =
@@ -15,6 +15,7 @@ function App() {
       <GlobalStyle />
       <AddBoardButton onClick={() => setBoardModal(true)}>+</AddBoardButton>
       <BoardModal />
+      <BoardTitleModal />
       <CardModal />
       <DragDropContainer />
     </Container>

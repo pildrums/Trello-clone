@@ -14,6 +14,7 @@ import {
 import { useForm } from "react-hook-form";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { handleSaveTodoInLocalStorage } from "todo.utils";
 
 interface IDroppableBoardProps {
   boardId: string;
@@ -37,9 +38,32 @@ function DroppableBoard({ boardId, todos }: IDroppableBoardProps) {
     useSetRecoilState(boardTitleState);
 
   // function
-  const handleEditBoard = (boardId: string) => {};
-  const handleDeleteBoard = (boardId: string) => {};
-  const onValid = () => {};
+  const handleEditBoard = (boardId: string) => {
+    setBoardTitle(boardId);
+    setBoardTitleModal(true);
+  };
+  const handleDeleteBoard = (boardId: string) => {
+    setTodos((todos: ITodoState) => {
+      const copyTodos: ITodoState = { ...todos };
+      delete copyTodos[boardId];
+      const result: ITodoState = copyTodos;
+      handleSaveTodoInLocalStorage(result);
+      return result;
+    });
+  };
+  const onValid = () => {
+    setTodos((todos: ITodoState) => {
+      const { text } = getValues();
+      const createdtodo: ITodo = { id: Date.now(), text };
+      const result: ITodoState = {
+        ...todos,
+        [boardId]: [createdtodo, ...todos[boardId]],
+      };
+      handleSaveTodoInLocalStorage(result);
+      return result;
+    });
+    setValue("text", "");
+  };
 
   // render
   return (
@@ -55,7 +79,7 @@ function DroppableBoard({ boardId, todos }: IDroppableBoardProps) {
             draggingOverWith,
             draggingFromThisWith,
             isUsingPlaceholder,
-          }: DroppableStateSnapshot
+          }: DroppableStateSnapshot,
         ) => (
           <Board ref={provided.innerRef} {...provided.droppableProps}>
             <BoardId onClick={() => handleEditBoard(boardId)}>
