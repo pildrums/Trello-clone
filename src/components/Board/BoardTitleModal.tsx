@@ -1,12 +1,14 @@
 import {
   boardTitleModalState,
   boardTitleState,
+  ITodo,
   ITodoState,
   todoState,
 } from "atoms";
 import ModalContainer from "components/common/ModalContainer";
 import { useForm } from "react-hook-form";
 import { SetterOrUpdater, useRecoilState, useSetRecoilState } from "recoil";
+import { handleSaveTodoInLocalStorage } from "todo.utils";
 
 interface IFormData {
   title: string;
@@ -23,8 +25,23 @@ function BoardTitleModal() {
   const [boardTitle, setBoardTitle] = useRecoilState<string>(boardTitleState);
 
   // function
-  const handleCloseModal = () => {};
-  const onValid = () => {};
+  const handleCloseModal = () => {
+    setBoardTitleModal(false);
+  };
+  const onValid = () => {
+    setTodos((todos: ITodoState) => {
+      const { title } = getValues();
+      const copyTodos: ITodoState = { ...todos };
+      const editBoard: ITodo[] = copyTodos[boardTitle];
+      delete copyTodos[boardTitle];
+      const result: ITodoState = { [title]: editBoard, ...copyTodos };
+      handleSaveTodoInLocalStorage(result);
+      return result;
+    });
+    setBoardTitle("");
+    setValue("title", "");
+    handleCloseModal();
+  };
 
   return (
     <ModalContainer
